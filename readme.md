@@ -62,14 +62,14 @@
  - 管理原生`GUI`,典型的窗口(`BrowserWindow`,`Tray`,`Dock`,`Menu`)
  - 创建渲染进程
  - 控制应用生命周期(`app`)
- - 常用模块 `app`,`BrowserWindow`,`ipcMain`,`Menu`,`Tray`,`MenuItem`,`dialog`,`Notification`,`webContents`,`autoUpdater`,`globalShortcut`,`clipboard`,`crashReporter`,`shell``nativeImage`
+ - 常用模块 `app`, `BrowserWindow`, `ipcMain`, `Menu`, `Tray`, `MenuItem`, `dialog`, `Notification`, `webContents`, `autoUpdater`, `globalShortcut`, `clipboard`, `crashReporter`,`shell`,`nativeImage`
 
 ## 渲染进程
 
  - 展示web页面的进程称为渲染进程
  - web页面运行在沙盒环境中，需要通过`Node.js`、`Electron` 提供的API跟系统底层交互
  - 一个`Electron`应用可以有多个渲染进程
- - 常用模块 `ipcRenderer`,`remote`,`desktopCapture`,`webFrame`,`clipboard`,`crashReporter`,`shell`
+ - 常用模块 `ipcRenderer`, `remote`, `desktopCapture`, `webFrame`, `clipboard`,`crashReporter`, `shell`
 
 
 # 项目实战
