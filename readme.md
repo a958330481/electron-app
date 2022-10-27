@@ -51,6 +51,25 @@
    - nvm 安装node
    - 安装electron
 
+ # Electron 架构
+
+![image](./images/electron-arch.png)
+
+## 主进程
+
+ - Electron 运行`package.json`的 `main`脚本的进程被称为主进程
+ - 每个应用只有一个主进程
+ - 管理原生`GUI`,典型的窗口(`BrowserWindow`,`Tray`,`Dock`,`Menu`)
+ - 创建渲染进程
+ - 控制应用生命周期(`app`)
+
+## 渲染进程
+
+ - 展示web页面的进程称为渲染进程
+ - web页面运行在沙盒环境中，需要通过`Node.js`、`Electron` 提供的API跟系统底层交互
+ - 一个`Electron`应用可以有多个渲染进程
+
+
 # 项目实战
 
   - 番茄时钟
