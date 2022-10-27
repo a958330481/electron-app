@@ -1,15 +1,17 @@
 {
-  "name": "electron-app",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
-  },
-  "author": "zhangkai14",
-  "license": "ISC",
-  "devDependencies": {
-    "electron": "^21.2.0"
-  }
+    "name": "electron-app",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "electron ."
+    },
+    "author": "kevin",
+    "license": "ISC",
+    "dependencies": {
+        "electron": "^21.2.0",
+        "node-notifier": "^10.0.1",
+        "timer.js": "^1.0.4"
+    }
 }
