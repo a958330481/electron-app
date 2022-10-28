@@ -60,6 +60,7 @@
  - Electron 运行`package.json`的 `main`脚本的进程被称为主进程
  - 每个应用只有一个主进程
  - 管理原生`GUI`,典型的窗口(`BrowserWindow`,`Tray`,`Dock`,`Menu`)
+ - 获取底层能力：`clipboard`剪切板, `globalShortcut` 全局快捷键, `desktopCapture`获取桌面, `shell`打开文件、`URL`
  - 创建渲染进程
  - 控制应用生命周期(`app`)
  - 常用模块 `app`, `BrowserWindow`, `ipcMain`, `Menu`, `Tray`, `MenuItem`, `dialog`, `Notification`, `webContents`, `autoUpdater`, `globalShortcut`, `clipboard`, `crashReporter`,`shell`,`nativeImage`
@@ -127,7 +128,12 @@
        - ipcRenderer.sendTo(`Electron5.0`之后)
      + 数据共享
        - web技术(localStorage、sessionStorage、indexedDB)
-
+    
+    > 注意事项
+     + 少用remote 模块
+       - 每次使用`remote`会触发底层的同步IPC事件,对性能影响较大,有造成进程卡死的风险
+     + 不要用`sync`模式
+     + 在请求 + 响应的通信模式下，需要自定义超时限制
 # 项目实战
 
   - 番茄时钟
