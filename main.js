@@ -2,30 +2,53 @@
  * 主进程
  */
 
-const { app, BrowserWindow, Notification, ipcMain } = require('electron'); 
-const notifier = require("node-notifier");
-const { NOTIFICATION_TYPE } = require("./utils/const");
+const { app, Notification, ipcMain } = require('electron'); 
+const notifier = require('node-notifier');
+const { NOTIFICATION_TYPE } = require('./utils/const');
+const { createWindow,windowManager } = require('./utils/windowManager');
+const { QUERY_WIN_ID } = require('./utils/events');
 
-let win;
-
-app.on('ready', () => { 
-    // 窗口需要挂在全局变量，不然可能会被垃圾回收，导致窗口消失
-    win = new BrowserWindow({
-        width: 600,
+// 创建窗体1
+function createWindowOne() { 
+    createWindow({
+        name: "win1",
+        with: 600,
         height: 480,
-        webPreferences: {
-            nodeIntegration: true, // 开启node环境
-            contextIsolation: false,
-        },
+        loadFileUrl: "./index.html",
+        isOpenDevTools:true,
     });
-    win.webContents.openDevTools();// 打开调试工具
-    win.loadFile('./index.html');
+}
+
+function createWindowTwo() {
+    createWindow({
+        name: "win2",
+        with: 600,
+        height: 480,
+        loadFileUrl: "./pages/win2.html",
+        isOpenDevTools: true,
+    });
+}
+
+app.whenReady().then(() => { 
+    createWindowOne();
+    createWindowTwo();
     handleIPC();
+    handleQueryWindowId();
 })
+
+// 获取window ID
+function handleQueryWindowId() { 
+    ipcMain.on(QUERY_WIN_ID, (e, arg) => { 
+        console.log("###value", windowManager.get(arg));
+        e.returnValue = windowManager.get(arg);
+    });
+}
 
 // 响应通信事件
 function handleIPC() { 
-    ipcMain.handle("work-notification", async ()=>{ 
+    ipcMain.handle("work-notification", async (e, ...args) => { 
+        // 获取参数
+        console.log(args);
         const res = await new Promise((resolve, reject) => {
             /*
             const notification = new Notification({

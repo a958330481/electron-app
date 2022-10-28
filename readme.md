@@ -71,6 +71,62 @@
  - 一个`Electron`应用可以有多个渲染进程
  - 常用模块 `ipcRenderer`, `remote`, `desktopCapture`, `webFrame`, `clipboard`,`crashReporter`, `shell`
 
+## 通讯模式
+
++ 目的
+    - 通知事件
+    - 数据传输
+    - 共享数据
+
++ IPC通信模块
+   - 主进程 ipcMain
+   - 渲染进程 ipcRenderer
+   - ipcMain 和 ipcRenderer  都是EventEmitter对象
+
+   + 用法
+
+   > 渲染进程 -> 主进程
+
+   ```javascript
+   // callback写法
+   
+   // 渲染进程 发送
+   ipcRenderer.send(channel,...args)
+
+   // 主进程 监听
+   ipcMain.on(channel,handler);
+   ```
+
+   ```javascript
+   // promise 写法(Electron7.0之后,处理请求 + 响应模式)
+   // 使用场景：和主进程通信后，希望能获取到返回结果
+
+   // 渲染进程 发送
+   ipcRenderer.invoke(channel,...args)
+
+    // 主进程 监听
+    ipcMain.handle(channel,handler);
+
+   ```
+
+   > 主进程 -> 渲染进程
+   ```javascript
+
+   // 主进程和渲染进程是一对多的关系：1 -> N
+   // 所以需要找到具体的窗体内容（webContents）来发送给指定的渲染进程
+   // 主进程 发送
+   webContents.send(channel);
+
+   // 渲染进程 监听
+   ipcRenderer.on(channel,handler)
+   ```
+
+   > 渲染进程 -> 渲染进程
+     + 通知事件
+       - 通过主进程转发(`Electron5.0`之前)
+       - ipcRenderer.sendTo(`Electron5.0`之后)
+     + 数据共享
+       - web技术(localStorage、sessionStorage、indexedDB)
 
 # 项目实战
 

@@ -2,9 +2,10 @@
  * 渲染进程
  */
 
-const { ipcRenderer } = require('electron');
+const { ipcRenderer, remote } = require('electron');
 const Timer = require('timer.js');
-const { NOTIFICATION_TYPE } = require("./utils/const");
+const { NOTIFICATION_TYPE } = require('./utils/const');
+const { QUERY_WIN_ID, RENDERDER_IPC } = require("./utils/events");
 
 // 创建计时器
 function startWork() {
@@ -17,8 +18,8 @@ function startWork() {
             notification();
         },
     });
-    workTimer.start(10);
-}
+    workTimer.start(5*60);
+};
 
 // 更新时间
 function updateTime(ms) {
@@ -33,8 +34,7 @@ function updateTime(ms) {
 
 // 通知
 async function notification() { 
-    const res = await ipcRenderer.invoke("work-notification");
-    console.log("res", res);
+    const res = await ipcRenderer.invoke("work-notification",1,2);
     switch (res) {
         case NOTIFICATION_TYPE.Rest:
             setTimeout(() => {
@@ -49,4 +49,24 @@ async function notification() {
     }
 }
 
+// 监听主进程通信
+function handleMainIPC() { 
+    ipcRenderer.on("ipc-to-renderer", () => { 
+        alert('俺收到主进程的来信啦~')
+    });
+}
+
+// 渲染进程间通信
+function handleRendererIPC() { 
+    const btn = document.getElementById("rendererIpc");
+    const targetWinName = "win2";
+    const targetWinId = ipcRenderer.sendSync(QUERY_WIN_ID, targetWinName);
+    btn.onclick = () => { 
+        console.log("targetWinId", targetWinId);
+        ipcRenderer.sendTo(targetWinId, RENDERDER_IPC, "win1 -> win2");
+    }
+}
+
 startWork();
+handleMainIPC();
+handleRendererIPC();
