@@ -65,6 +65,8 @@
  - 控制应用生命周期(`app`)
  - 常用模块 `app`, `BrowserWindow`, `ipcMain`, `Menu`, `Tray`, `MenuItem`, `dialog`, `Notification`, `webContents`, `autoUpdater`, `globalShortcut`, `clipboard`, `crashReporter`,`shell`,`nativeImage`
 
+ ![image](./images/ability.png)
+
 ## 渲染进程
 
  - 展示web页面的进程称为渲染进程
@@ -134,6 +136,14 @@
        - 每次使用`remote`会触发底层的同步IPC事件,对性能影响较大,有造成进程卡死的风险
      + 不要用`sync`模式
      + 在请求 + 响应的通信模式下，需要自定义超时限制
+
+## 对比web开发的优势
+    - 无浏览器兼容问题
+    - 最新浏览器Feature
+    - No PolyFill
+    - Es 高级语法
+    - 无跨域问题
+    - Powered by Node.js
 # :computer: 项目实战
 
   - 番茄时钟
